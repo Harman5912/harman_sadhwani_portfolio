@@ -68,11 +68,11 @@ const SOCIALS = [
 
 export default function SocialLinks() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-off-white py-20 md:py-36">
+    <section className="relative flex min-h-full items-center overflow-hidden bg-off-white py-8 md:py-12">
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(212,175,55,0.6),transparent)]" />
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.09),transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto max-w-3xl px-5 text-center md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-3xl px-5 text-center md:px-8">
         <SectionHeading
           kicker="Contact"
           title={
@@ -83,7 +83,7 @@ export default function SocialLinks() {
           subtitle="Have a project in mind, a research idea, or just want to say hello? My inbox is always open."
         />
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-6 md:gap-8">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 md:gap-8">
           {SOCIALS.map((s, i) => (
             <motion.div
               key={s.label}
@@ -115,7 +115,7 @@ export default function SocialLinks() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="mt-12 text-sm text-ink/50"
+          className="mt-8 text-sm text-ink/50"
         >
           Open to internships, collaborations & freelance work —{" "}
           <a

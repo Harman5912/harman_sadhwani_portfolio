@@ -8,7 +8,7 @@ export default function PhilosophyQuote() {
   const words = QUOTE.split(" ");
 
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#faf6ea_50%,#f4ead0_100%)] py-20 md:py-28">
+    <section className="relative flex min-h-full items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#faf6ea_50%,#f4ead0_100%)] py-8 md:py-12">
       {/* Decorative quote mark */}
       <motion.span
         initial={{ opacity: 0, scale: 0.8 }}
@@ -29,11 +29,11 @@ export default function PhilosophyQuote() {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, margin: "-20% 0px" }}
           transition={{ duration: 1.1, ease: "easeInOut" }}
-          className="gold-line-h mx-auto mb-12 h-px w-40 md:w-64"
+          className="gold-line-h mx-auto mb-8 h-px w-40 md:w-64"
           style={{ transformOrigin: "left center" }}
         />
 
-        <blockquote className="font-display text-[28px] font-bold leading-[1.25] tracking-tight text-ink sm:text-5xl md:text-6xl">
+        <blockquote className="font-display text-[26px] font-bold leading-[1.25] tracking-tight text-ink sm:text-4xl md:text-5xl">
           {words.map((word, i) => (
             <motion.span
               key={i}
@@ -53,7 +53,7 @@ export default function PhilosophyQuote() {
           whileInView={{ scale: 1, rotate: 45 }}
           viewport={{ once: true, margin: "-20% 0px" }}
           transition={{ delay: words.length * 0.14, type: "spring", stiffness: 300, damping: 18 }}
-          className="mt-12 inline-block h-2 w-2 border border-gold bg-gold/25 shadow-[0_0_14px_rgba(212,175,55,0.7)]"
+          className="mt-8 inline-block h-2 w-2 border border-gold bg-gold/25 shadow-[0_0_14px_rgba(212,175,55,0.7)]"
         />
 
         {/* Bottom gold rule */}
@@ -62,7 +62,7 @@ export default function PhilosophyQuote() {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, margin: "-20% 0px" }}
           transition={{ duration: 1.1, delay: 0.3, ease: "easeInOut" }}
-          className="gold-line-h mx-auto mt-12 h-px w-40 md:w-64"
+          className="gold-line-h mx-auto mt-8 h-px w-40 md:w-64"
           style={{ transformOrigin: "right center" }}
         />
       </div>

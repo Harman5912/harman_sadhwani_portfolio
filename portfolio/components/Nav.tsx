@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useFullpage } from "./Fullpage";
 
 const LINKS = [
   { label: "About", id: "about" },
@@ -14,6 +15,7 @@ const LINKS = [
 ] as const;
 
 export default function Nav() {
+  const { navigate } = useFullpage();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState<string>("about");
@@ -63,7 +65,7 @@ export default function Nav() {
 
   const go = (id: string) => {
     setOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    navigate(id);
   };
 
   return (
@@ -85,7 +87,7 @@ export default function Nav() {
         >
           {/* Logo */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => navigate("home")}
             aria-label="Back to top — Harman Sadhwani"
             className="group relative flex items-center gap-3"
           >
@@ -159,6 +161,7 @@ export default function Nav() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 bg-off-white/95 backdrop-blur-2xl lg:hidden"
+            data-fullpage-ignore
           >
             <div className="gold-halo absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-3xl" />
             {LINKS.map((l, i) => (

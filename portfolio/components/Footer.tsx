@@ -2,16 +2,18 @@
 
 import Image from "next/image";
 import MagneticButton from "./MagneticButton";
+import { useFullpage } from "./Fullpage";
 
 export default function Footer() {
+  const { navigate } = useFullpage();
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-gold/25 bg-white">
+    <footer className="relative w-full border-t border-gold/25 bg-white">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-5 py-10 md:flex-row md:px-8">
         {/* Logo */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => navigate("home")}
           aria-label="Back to top"
           className="group flex items-center gap-3"
         >
@@ -38,7 +40,7 @@ export default function Footer() {
 
         {/* Back to top */}
         <MagneticButton
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => navigate("home")}
           ariaLabel="Back to top"
           className="animate-floaty-slow h-12 w-12 rounded-full border border-gold/50 bg-white/80 text-gold-deep shadow-[0_8px_24px_rgba(212,175,55,0.2)] transition-all duration-500 hover:border-gold hover:shadow-[0_0_0_1px_rgba(212,175,55,0.55),0_14px_40px_rgba(212,175,55,0.35)]"
         >

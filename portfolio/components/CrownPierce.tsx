@@ -9,21 +9,20 @@ import GoldParticleField from "./GoldParticleField";
 export default function CrownPierce() {
   return (
     <section
-      id="crown-pierce"
-      className="relative overflow-hidden bg-white py-20 md:py-36"
+      className="relative flex min-h-full items-center overflow-hidden bg-white py-8 md:py-12"
     >
       <GoldParticleField density={38} className="opacity-70" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-[linear-gradient(90deg,transparent,rgba(212,175,55,0.6),transparent)]" />
       <div className="pointer-events-none absolute left-1/2 top-24 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.12),transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto max-w-4xl px-5 text-center md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-5 text-center md:px-8">
         {/* Emblem */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto flex h-72 w-72 items-center justify-center md:h-96 md:w-96"
+          className="relative mx-auto flex h-44 w-44 items-center justify-center md:h-64 md:w-64"
         >
           <div className="gold-halo absolute inset-0 rounded-full opacity-80 blur-3xl" />
           {/* Rotating rings with orbiting dots */}
@@ -40,7 +39,7 @@ export default function CrownPierce() {
             alt="Crown Pierce logo"
             width={320}
             height={320}
-            className="animate-floaty relative z-10 h-40 w-40 object-contain drop-shadow-[0_16px_40px_rgba(212,175,55,0.4)] md:h-56 md:w-56"
+            className="animate-floaty relative z-10 h-28 w-28 object-contain drop-shadow-[0_16px_40px_rgba(212,175,55,0.4)] md:h-36 md:w-36"
           />
         </motion.div>
 
@@ -51,7 +50,7 @@ export default function CrownPierce() {
               Crown <span className="gold-text">Pierce</span>
             </>
           }
-          className="mt-6"
+          className="mt-4"
         />
 
         <motion.p
@@ -72,7 +71,7 @@ export default function CrownPierce() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-12% 0px" }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          className="mt-6 flex flex-wrap items-center justify-center gap-4"
         >
           <MagneticButton
             href="https://crown-pierce-co.netlify.app/"
@@ -90,7 +89,7 @@ export default function CrownPierce() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.35, duration: 0.8 }}
-          className="mt-6 text-[12px] uppercase tracking-[0.3em] text-ink/40"
+          className="mt-4 text-[12px] uppercase tracking-[0.3em] text-ink/40"
         >
           Independent Software Studio · Est. by Harman
         </motion.p>

@@ -1,4 +1,5 @@
 import { MotionConfig } from "framer-motion";
+import Fullpage, { FullpageSection } from "@/components/Fullpage";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -16,18 +17,39 @@ export default function Home() {
   return (
     <MotionConfig reducedMotion="user">
       <main className="relative">
-        <Nav />
-        <Hero />
-        <About />
-        <PhilosophyQuote />
-        <Projects />
-        <MinorProjects />
-        <CrownPierce />
-        <AchievementsGallery />
-        <ResumeViewer />
-        <SocialLinks />
-        <Footer />
-        <ChatWidget />
+        <Fullpage>
+          <Nav />
+          <FullpageSection id="home" className="bg-off-white">
+            <Hero />
+          </FullpageSection>
+          <FullpageSection id="about" className="bg-off-white">
+            <About />
+          </FullpageSection>
+          <FullpageSection id="philosophy" className="bg-white">
+            <PhilosophyQuote />
+          </FullpageSection>
+          {/* Projects renders its own full-screen slides (intro + one per project) */}
+          <Projects />
+          <FullpageSection id="minor-projects">
+            <MinorProjects />
+          </FullpageSection>
+          <FullpageSection id="crown-pierce" className="bg-white">
+            <CrownPierce />
+          </FullpageSection>
+          <FullpageSection id="achievements">
+            <AchievementsGallery />
+          </FullpageSection>
+          <FullpageSection id="resume" className="bg-white">
+            <ResumeViewer />
+          </FullpageSection>
+          <FullpageSection id="contact" className="bg-off-white">
+            <SocialLinks />
+          </FullpageSection>
+          <FullpageSection id="footer" className="flex items-center bg-white">
+            <Footer />
+          </FullpageSection>
+          <ChatWidget />
+        </Fullpage>
       </main>
     </MotionConfig>
   );

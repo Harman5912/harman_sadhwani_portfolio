@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import MagneticButton from "./MagneticButton";
 import NeuralNetworkCanvas from "./NeuralNetworkCanvas";
+import { useFullpage } from "./Fullpage";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -66,6 +67,7 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const typed = useTypewriter(ROLES);
   const reduce = useReducedMotion();
+  const { navigate } = useFullpage();
 
   useGSAP(
     () => {
@@ -87,13 +89,12 @@ export default function Hero() {
 
   return (
     <section
-      id="home"
       ref={sectionRef}
-      className="relative flex min-h-screen items-center overflow-hidden bg-[radial-gradient(ellipse_120%_90%_at_50%_-20%,rgba(212,175,55,0.14)_0%,transparent_55%),radial-gradient(ellipse_90%_80%_at_90%_110%,rgba(212,175,55,0.08)_0%,transparent_55%)]"
+      className="relative flex min-h-full items-center overflow-hidden bg-[radial-gradient(ellipse_120%_90%_at_50%_-20%,rgba(212,175,55,0.14)_0%,transparent_55%),radial-gradient(ellipse_90%_80%_at_90%_110%,rgba(212,175,55,0.08)_0%,transparent_55%)]"
     >
       <NeuralNetworkCanvas />
 
-      <div className="hero-inner relative z-10 mx-auto grid w-full max-w-7xl items-center gap-14 px-5 pb-24 pt-32 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+      <div className="hero-inner relative z-10 mx-auto grid w-full max-w-7xl items-center gap-8 px-5 pb-12 pt-20 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         {/* ── Copy ── */}
         <div className="text-center lg:text-left">
           <motion.p
@@ -106,7 +107,7 @@ export default function Hero() {
           </motion.p>
 
           {/* Name — first name on line 1, last name stacked beneath in gold */}
-          <h1 className="font-display mt-6 text-6xl font-black leading-[1.04] tracking-tight sm:text-7xl xl:text-8xl">
+          <h1 className="font-display mt-5 text-5xl font-black leading-[1.04] tracking-tight sm:text-6xl xl:text-7xl">
             {NAME_LINES.map((line, li) => (
               <span
                 key={line}
@@ -147,7 +148,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.25 }}
-            className="mx-auto mt-7 max-w-xl text-[15px] leading-relaxed text-ink/60 lg:mx-0"
+            className="mx-auto mt-5 max-w-xl text-[14.5px] leading-relaxed text-ink/60 lg:mx-0"
           >
             I build intelligent software that solves real-world problems — AI-powered
             products, developer tools and digital experiences where premium design meets
@@ -158,12 +159,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.4 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
+            className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
           >
             <MagneticButton
-              onClick={() =>
-                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => navigate("projects")}
               className="btn-gold sheen rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.18em]"
             >
               View Projects
@@ -184,7 +183,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto flex h-[400px] w-72 flex-col items-center justify-end sm:h-[470px] sm:w-80 md:h-[540px] md:w-[24rem]"
+          className="relative mx-auto flex h-[clamp(300px,46vh,540px)] w-72 flex-col items-center justify-end sm:w-80 md:w-[24rem]"
         >
           {/* Floating figure: cutout + golden silhouette aura + reflection */}
           <div className="animate-floaty relative w-64 sm:w-72 md:w-80">
@@ -207,7 +206,7 @@ export default function Hero() {
               width={420}
               height={420}
               priority
-              className="relative z-10 h-64 w-64 object-contain drop-shadow-[0_18px_42px_rgba(212,175,55,0.3)] sm:h-72 sm:w-72 md:h-80 md:w-80"
+              className="relative z-10 h-[clamp(196px,34vh,320px)] w-[clamp(196px,34vh,320px)] object-contain drop-shadow-[0_18px_42px_rgba(212,175,55,0.3)]"
             />
 
             {/* Soft reflection fading away below */}

@@ -6,10 +6,10 @@ import MagneticButton from "./MagneticButton";
 
 export default function ResumeViewer() {
   return (
-    <section id="resume" className="relative overflow-hidden bg-white py-20 md:py-36">
+    <section className="relative flex min-h-full items-center overflow-hidden bg-white py-8 md:py-10">
       <div className="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.08),transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-5 md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-5 md:px-8">
         <SectionHeading
           kicker="Resume"
           title={
@@ -21,7 +21,7 @@ export default function ResumeViewer() {
         />
 
         {/* Unfolding document */}
-        <div className="mt-14" style={{ perspective: 1400 }}>
+        <div className="mt-4" style={{ perspective: 1400 }}>
           <motion.div
             initial={{ rotateX: 78, y: 70, opacity: 0.25 }}
             whileInView={{ rotateX: 0, y: 0, opacity: 1 }}
@@ -40,7 +40,7 @@ export default function ResumeViewer() {
                   src="/35747.pdf"
                   type="application/pdf"
                   title="Harman Sadhwani — Resume"
-                  className="block h-[70vh] min-h-[440px] w-full"
+                  className="block h-[50vh] min-h-[320px] w-full"
                 />
                 {/* Bottom bar */}
                 <div className="relative flex flex-wrap items-center justify-between gap-4 border-t border-gold/25 bg-white/95 px-6 py-4 backdrop-blur">

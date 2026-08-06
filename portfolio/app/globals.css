@@ -26,6 +26,7 @@
 
 html {
   scroll-behavior: auto;
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -76,6 +77,20 @@ body {
 
 .gold-line-h {
   background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.85) 40%, rgba(212, 175, 55, 0.85) 60%, transparent);
+}
+
+/* ─── Full-page section engine ───
+   Each screen fills the viewport; only the active one is visible.
+   Hiding uses a delayed visibility flip so the opacity crossfade shows. */
+.fullpage-section {
+  scroll-snap-align: start;
+  transition: opacity 0.55s ease, visibility 0s;
+}
+.fullpage-section.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.55s ease, visibility 0s linear 0.55s;
 }
 
 /* Hide scrollbars on horizontal snap carousels while keeping them scrollable */

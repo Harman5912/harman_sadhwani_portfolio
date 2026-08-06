@@ -50,15 +50,14 @@ export default function About() {
 
   return (
     <section
-      id="about"
       ref={sectionRef}
-      className="relative overflow-hidden bg-off-white py-20 md:py-36"
+      className="relative flex min-h-full items-center overflow-hidden bg-off-white py-8 md:py-12"
     >
       <GoldParticleField density={45} />
       <div className="pointer-events-none absolute -left-40 top-24 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.1),transparent_70%)]" />
       <div className="pointer-events-none absolute -right-40 bottom-24 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.08),transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 md:px-8">
         <SectionHeading
           kicker="About"
           title={
@@ -68,7 +67,7 @@ export default function About() {
           }
         />
 
-        <div className="mt-6 grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+        <div className="mt-4 grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
           {/* ── Paragraphs with filling timeline ── */}
           <div className="relative">
             <div className="absolute bottom-4 left-[5px] top-4 w-px bg-gold/25">
@@ -77,7 +76,7 @@ export default function About() {
                 style={{ scaleY: timeline }}
               />
             </div>
-            <div className="space-y-10 pl-10">
+            <div className="space-y-6 pl-10">
               {PARAGRAPHS.map((p, i) => (
                 <div key={i} className="relative">
                   <motion.span
@@ -94,7 +93,7 @@ export default function About() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-12% 0px" }}
-                    className="text-[15.5px] leading-[1.9] text-ink/75"
+                    className="text-[15px] leading-[1.8] text-ink/75"
                   >
                     {p}
                   </motion.p>
@@ -104,18 +103,18 @@ export default function About() {
           </div>
 
           {/* ── Focus + stats ── */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="glass-card rounded-2xl p-8 shadow-[0_20px_60px_rgba(26,26,26,0.07)]"
+              className="glass-card rounded-2xl p-6 shadow-[0_20px_60px_rgba(26,26,26,0.07)]"
             >
               <h3 className="font-display text-2xl font-bold text-ink">
                 Areas of <span className="gold-text">Expertise</span>
               </h3>
-              <div className="mt-5 flex flex-wrap gap-2.5">
+              <div className="mt-4 flex flex-wrap gap-2.5">
                 {FOCUS.map((f, i) => (
                   <motion.span
                     key={f}
@@ -131,7 +130,7 @@ export default function About() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {STATS.map((s, i) => (
                 <motion.div
                   key={s.label}
@@ -139,9 +138,9 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-8% 0px" }}
                   transition={{ delay: 0.08 * i, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="group rounded-2xl border border-gold/25 bg-white/80 p-6 text-center shadow-[0_10px_30px_rgba(26,26,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:border-gold/60 hover:shadow-[0_16px_44px_rgba(212,175,55,0.22)]"
+                  className="group rounded-2xl border border-gold/25 bg-white/80 p-5 text-center shadow-[0_10px_30px_rgba(26,26,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:border-gold/60 hover:shadow-[0_16px_44px_rgba(212,175,55,0.22)]"
                 >
-                  <p className="font-display gold-text text-4xl font-bold">{s.value}</p>
+                  <p className="font-display gold-text text-3xl font-bold">{s.value}</p>
                   <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.16em] text-ink/55">
                     {s.label}
                   </p>
@@ -154,7 +153,7 @@ export default function About() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="font-display text-lg italic leading-relaxed text-ink/45"
+              className="font-display hidden text-lg italic leading-relaxed text-ink/45 lg:block"
             >
               “Rather than simply creating applications, I build products.”
             </motion.p>

@@ -108,8 +108,9 @@ export default function ProjectShowcase({ project, index, total, active }: Props
         {project.num}
       </span>
 
-      {/* Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center md:px-14">
+      {/* Content — scrolls internally on short screens while the video stays pinned */}
+      <div data-scrollable className="relative z-10 h-full overflow-y-auto">
+        <div className="flex min-h-full flex-col items-center justify-center px-6 py-8 text-center md:px-14">
         <motion.p
           {...animProps(settle(0.1))}
           className="text-[11px] font-semibold uppercase tracking-[0.45em] text-gold-light"
@@ -118,22 +119,22 @@ export default function ProjectShowcase({ project, index, total, active }: Props
         </motion.p>
 
         {/* Logo medallion */}
-        <motion.div {...animProps(settle(0.22))} className="relative mt-8">
+        <motion.div {...animProps(settle(0.22))} className="relative mt-6">
           <div className="gold-halo absolute -inset-5 rounded-full blur-xl" />
-          <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-gold/60 bg-white/10 shadow-[0_0_60px_rgba(212,175,55,0.35)] ring-1 ring-white/25 backdrop-blur-md md:h-36 md:w-36">
+          <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-gold/60 bg-white/10 shadow-[0_0_60px_rgba(212,175,55,0.35)] ring-1 ring-white/25 backdrop-blur-md md:h-28 md:w-28">
             <Image
               src={project.logo}
               alt={`${project.title} logo`}
               width={128}
               height={128}
-              className="h-16 w-16 object-contain drop-shadow-[0_4px_14px_rgba(212,175,55,0.5)] md:h-20 md:w-20"
+              className="h-12 w-12 object-contain drop-shadow-[0_4px_14px_rgba(212,175,55,0.5)] md:h-16 md:w-16"
             />
           </div>
         </motion.div>
 
         <motion.h3
           {...animProps(settle(0.34))}
-          className="font-display mt-9 text-5xl font-black tracking-tight text-white md:text-7xl"
+          className="font-display mt-6 text-4xl font-black tracking-tight text-white md:text-6xl"
         >
           {project.title.split(" ").map((w, i) => (
             <span key={i} className={i % 2 === 1 ? "gold-text" : ""}>
@@ -144,12 +145,12 @@ export default function ProjectShowcase({ project, index, total, active }: Props
 
         <motion.p
           {...animProps(settle(0.46))}
-          className="mt-7 max-w-2xl text-[15px] leading-[1.85] text-white/75"
+          className="mt-5 max-w-2xl text-sm leading-[1.8] text-white/75"
         >
           {project.desc}
         </motion.p>
 
-        <motion.div {...animProps(settle(0.6))} className="mt-10">
+        <motion.div {...animProps(settle(0.6))} className="mt-7">
           {project.comingSoon ? (
             <div className="animate-pulse-glow inline-flex items-center gap-3 rounded-full border border-gold/60 bg-gold/10 px-7 py-3.5 backdrop-blur-md">
               <span className="relative flex items-center overflow-hidden text-[12px] font-bold uppercase tracking-[0.3em] text-gold-light">
@@ -173,6 +174,7 @@ export default function ProjectShowcase({ project, index, total, active }: Props
             </MagneticButton>
           )}
         </motion.div>
+        </div>
       </div>
 
       {/* Progress footer */}

@@ -166,13 +166,12 @@ export default function AchievementsGallery() {
 
   return (
     <section
-      id="achievements"
-      className="relative overflow-hidden bg-[linear-gradient(180deg,#faf9f6_0%,#f7f1e3_100%)] py-20 md:py-32"
+      className="relative flex min-h-full items-center overflow-hidden bg-[linear-gradient(180deg,#faf9f6_0%,#f7f1e3_100%)] py-6 md:py-8"
     >
       <div className="pointer-events-none absolute -left-32 top-40 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.1),transparent_70%)]" />
       <div className="pointer-events-none absolute -right-32 bottom-40 h-96 w-96 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.08),transparent_70%)]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-5 md:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 md:px-8">
         <SectionHeading
           kicker="Trophy Case"
           title={
@@ -183,15 +182,15 @@ export default function AchievementsGallery() {
           subtitle="A rotating ring of credentials — hover a certificate to focus it, or click it to view up close."
         />
 
-        <div className="mt-14 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="mt-5 grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-10">
           {/* ── 3D rotating ring ── */}
           <div
             ref={stageRef}
-            className="relative col-span-1 flex h-[380px] select-none items-center justify-center overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_50%_45%,rgba(212,175,55,0.14),transparent_65%)] sm:h-[450px] lg:col-span-7"
+            className="relative col-span-1 flex h-[300px] select-none items-center justify-center overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_50%_45%,rgba(212,175,55,0.14),transparent_65%)] sm:h-[360px] lg:col-span-7"
             style={{ perspective: 1000 }}
           >
             <div
-              className="relative h-[250px] w-[180px] sm:h-[300px] sm:w-[220px]"
+              className="relative h-[210px] w-[150px] sm:h-[260px] sm:w-[190px]"
               style={{
                 transformStyle: "preserve-3d",
                 transform: `rotateY(${rotation}deg)`,
@@ -280,7 +279,7 @@ export default function AchievementsGallery() {
 
           {/* ── Info panel ── */}
           <div className="col-span-1 lg:col-span-5">
-            <div className="relative h-full overflow-hidden rounded-2xl border border-gold/25 bg-white/90 p-6 shadow-[0_24px_60px_rgba(0,0,0,0.08)] backdrop-blur md:p-8">
+            <div className="relative h-full overflow-hidden rounded-2xl border border-gold/25 bg-white/90 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.08)] backdrop-blur md:p-6">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={activeIndex}
@@ -296,18 +295,18 @@ export default function AchievementsGallery() {
                     <MedalBadge variant={active.badge} label={active.badgeLabel} />
                   </div>
 
-                  <h3 className="font-display mt-6 text-2xl font-bold leading-tight text-ink md:text-[30px]">
+                  <h3 className="font-display mt-4 text-xl font-bold leading-tight text-ink md:text-2xl">
                     {active.event}
                   </h3>
 
-                  <div className="my-5 h-px w-14 bg-[linear-gradient(90deg,#d4af37,transparent)]" />
+                  <div className="my-3 h-px w-14 bg-[linear-gradient(90deg,#d4af37,transparent)]" />
 
                   <p className="text-sm leading-relaxed text-ink/60 md:text-[15px]">
                     {active.extras}
                   </p>
 
                   {/* Quick navigation dots */}
-                  <div className="mt-8 flex items-center justify-between gap-4">
+                  <div className="mt-5 flex items-center justify-between gap-4">
                     <div className="flex flex-wrap items-center gap-2">
                       {ACHIEVEMENTS.map((a, i) => (
                         <button
@@ -331,7 +330,7 @@ export default function AchievementsGallery() {
                 </motion.div>
               </AnimatePresence>
             </div>
-            <p className="mt-5 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-ink/40">
+            <p className="mt-4 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-ink/40">
               Hover the ring to pause · Click a certificate to enlarge
             </p>
           </div>
@@ -350,6 +349,7 @@ export default function AchievementsGallery() {
             role="dialog"
             aria-modal="true"
             aria-label={`${lightbox.event} certificate`}
+            data-fullpage-ignore
             className="fixed inset-0 z-[90] flex items-center justify-center overflow-y-auto bg-black/80 p-4 backdrop-blur-sm md:p-8"
           >
             <motion.div

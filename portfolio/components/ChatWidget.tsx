@@ -124,6 +124,7 @@ export default function ChatWidget() {
         aria-label={open ? "Close assistant" : "Open assistant"}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
+        data-fullpage-ignore
         className="fixed bottom-6 right-6 z-[70] flex h-14 w-14 items-center justify-center rounded-full bg-[linear-gradient(135deg,#d4af37,#b8860b)] text-white shadow-[0_10px_36px_rgba(212,175,55,0.5)]"
       >
         <span className="animate-pulse-glow absolute inset-0 rounded-full" aria-hidden="true" />
@@ -165,6 +166,7 @@ export default function ChatWidget() {
             className="fixed bottom-24 right-4 z-[70] flex h-[540px] w-[min(92vw,380px)] flex-col overflow-hidden rounded-2xl border border-gold/45 bg-white/90 shadow-[0_30px_90px_rgba(26,26,26,0.25)] backdrop-blur-xl md:right-6"
             role="dialog"
             aria-label="Crown Pierce assistant"
+            data-fullpage-ignore
           >
             {/* Header */}
             <div
