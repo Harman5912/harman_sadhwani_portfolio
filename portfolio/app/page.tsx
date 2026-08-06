@@ -1,5 +1,6 @@
 import { MotionConfig } from "framer-motion";
 import Fullpage, { FullpageSection } from "@/components/Fullpage";
+import { structuredData } from "./structured-data";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -16,6 +17,13 @@ import ChatWidget from "@/components/ChatWidget";
 export default function Home() {
   return (
     <MotionConfig reducedMotion="user">
+      {/* Structured data so search engines can identify the person, achievements, certificates and projects */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       <main className="relative">
         <Fullpage>
           <Nav />
