@@ -1,0 +1,260 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────
+   ROYAL GOLD & WHITE THEME — Harman Sadhwani
+   ───────────────────────────────────────────── */
+:root {
+  --gold: #d4af37;
+  --gold-light: #f4e5b2;
+  --gold-deep: #b8860b;
+  --white: #ffffff;
+  --off-white: #faf9f6;
+  --ink: #1a1a1a;
+  --glass: rgba(255, 255, 255, 0.6);
+  --gold-glow: rgba(212, 175, 55, 0.35);
+}
+
+@theme inline {
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-deep: var(--gold-deep);
+  --color-off-white: var(--off-white);
+  --color-ink: var(--ink);
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-body: var(--font-sora), "Sora", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-snap-type: y mandatory;
+}
+
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(212, 175, 55, 0.35);
+  color: var(--ink);
+}
+
+/* Thin gold scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1ede4;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  border-radius: 8px;
+  border: 2px solid #f1ede4;
+}
+
+/* ─── Text & surface helpers ─── */
+.gold-text {
+  background: linear-gradient(115deg, #bf953f 0%, #fcf6b5 40%, #b38728 70%, #fbf5b7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gold-halo {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.35), transparent 70%);
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.gold-line-h {
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.85) 40%, rgba(212, 175, 55, 0.85) 60%, transparent);
+}
+
+/* ─── Full-page section engine ───
+   Each screen fills the viewport; only the active one is visible.
+   Hiding uses a delayed visibility flip so the opacity crossfade shows. */
+.fullpage-section {
+  scroll-snap-align: start;
+  transition: opacity 0.55s ease, visibility 0s;
+}
+.fullpage-section.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.55s ease, visibility 0s linear 0.55s;
+}
+
+/* Hide scrollbars on horizontal snap carousels while keeping them scrollable */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.paper-texture {
+  background-image: linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ─── Buttons ─── */
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.btn-gold:hover {
+  box-shadow: 0 10px 40px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.btn-outline {
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: var(--gold-deep);
+  background: transparent;
+}
+.btn-outline:hover {
+  background: rgba(212, 175, 55, 0.08);
+}
+
+/* Shimmer sweep on hover */
+.sheen {
+  position: relative;
+  overflow: hidden;
+}
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%);
+  transform: translateX(-130%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+.sheen:hover::after {
+  transform: translateX(130%);
+}
+
+/* ─── Keyframes ─── */
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.animate-floaty {
+  animation: floaty 5s ease-in-out infinite;
+}
+.animate-floaty-slow {
+  animation: floaty 7.5s ease-in-out infinite;
+}
+
+@keyframes spin360 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin360 24s linear infinite;
+}
+.animate-spin-slower {
+  animation: spin360 48s linear infinite reverse;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(212, 175, 55, 0);
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes shimmer-x {
+  0% {
+    transform: translateX(-220%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(340%) skewX(-18deg);
+  }
+}
+.animate-shimmer {
+  animation: shimmer-x 2.8s ease-in-out infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.animate-blink {
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* Golden aura behind the profile cutout — breathes to trace the silhouette */
+@keyframes aura-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.95;
+  }
+}
+.animate-aura {
+  animation: aura-breathe 6s ease-in-out infinite;
+}
+
+/* Golden sparkles rising from the portrait pedestal */
+@keyframes rise-spark {
+  0% {
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-96px) scale(1);
+    opacity: 0;
+  }
+}
+.animate-rise {
+  animation: rise-spark 4.6s ease-out infinite;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
