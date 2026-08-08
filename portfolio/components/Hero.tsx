@@ -169,7 +169,7 @@ export default function Hero() {
               <span aria-hidden="true">→</span>
             </MagneticButton>
             <MagneticButton
-              href="/35747.pdf"
+              href="/resume_HS.pdf"
               download
               className="btn-outline rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.18em]"
             >

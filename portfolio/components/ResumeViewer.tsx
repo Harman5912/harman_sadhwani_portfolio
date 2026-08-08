@@ -37,7 +37,7 @@ export default function ResumeViewer() {
             <div className="relative overflow-hidden rounded-2xl border border-gold/45 bg-white shadow-[0_40px_110px_rgba(26,26,26,0.16)]">
               <div className="paper-texture relative">
                 <embed
-                  src="/35747.pdf"
+                  src="/resume_HS.pdf"
                   type="application/pdf"
                   title="Harman Sadhwani — Resume"
                   className="block h-[50vh] min-h-[320px] w-full"
@@ -49,7 +49,7 @@ export default function ResumeViewer() {
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
                     <MagneticButton
-                      href="/35747.pdf"
+                      href="/resume_HS.pdf"
                       download
                       className="btn-gold sheen rounded-full px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em]"
                     >
@@ -57,7 +57,7 @@ export default function ResumeViewer() {
                       <span aria-hidden="true">↓</span>
                     </MagneticButton>
                     <MagneticButton
-                      href="/35747.pdf"
+                      href="/resume_HS.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn-outline rounded-full px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em]"
