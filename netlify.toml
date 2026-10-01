@@ -1,12 +1,19 @@
-# Netlify build configuration for the Crown Pierce portfolio (Next.js).
-# The Next.js app lives in the portfolio/ subfolder; Netlify treats it as the
-# site root via base. The Next.js Runtime plugin handles serverless API routes
-# (e.g. /api/chat) and static optimization automatically.
-
 [build]
-  base = "portfolio"
   command = "npm run build"
-  publish = ".next"
+  publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# SPA fallback. This is a shadowing rule (force is not set), so the functions
+# above still win for /api/* — it only catches real client-side routes.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+  framework = "vite"

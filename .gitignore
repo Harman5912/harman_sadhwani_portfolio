@@ -1,12 +1,8 @@
-# Freebuff tool data (local only)
-.freebuff/
-desktop.db
-
-# Scratch / loose files at this folder root (not part of the site)
-index.html
-test.txt
-move.bat
-nul
-
-# Stale duplicate assets folder at root — the site builds from portfolio/public/
-public/
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
