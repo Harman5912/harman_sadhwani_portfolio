@@ -27,68 +27,62 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-28 px-4 sm:px-8 max-w-6xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6">
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border-amber-500/30 text-[11px] font-mono text-[#D4AF37] tracking-widest uppercase mb-3">
+      <div className="text-center max-w-xl mx-auto mb-5">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border-amber-500/30 text-[10px] font-mono text-[#D4AF37] tracking-widest uppercase mb-2">
           <Sparkles className="w-3.5 h-3.5 text-[#F5E4B5]" />
-          <span>CONNECT & COLLABORATE</span>
+          <span>TRANSMIT DISPATCH // 06</span>
         </div>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white uppercase">
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase">
           Enter The <span className="text-gold-gradient">Kingdom</span>
         </h2>
-        <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-4" />
-        <p className="mt-4 text-xs sm:text-sm text-gray-300 font-light">
-          Whether you want to discuss full-stack architectures, agentic developer systems, or world-class digital experiences — my inbox is open.
-        </p>
+        <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-2" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-left items-start">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 text-left items-start">
         {/* Left Column: Direct Verified Channels */}
-        <div className="lg:col-span-5 flex flex-col gap-4">
+        <div className="md:col-span-5 flex flex-col gap-3">
           {/* Email Primary Card */}
-          <div className="glass-panel p-6 rounded-3xl border border-amber-500/30 relative overflow-hidden">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2.5 text-[#D4AF37]">
-                <Mail className="w-5 h-5" />
-                <span className="font-mono text-xs uppercase tracking-wider font-semibold">Direct Email</span>
+          <div className="glass-panel p-5 rounded-2xl border border-amber-500/30">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2 text-[#D4AF37]">
+                <Mail className="w-4 h-4" />
+                <span className="font-mono text-[10px] uppercase tracking-wider font-semibold">Direct Email</span>
               </div>
               <button
                 onClick={handleCopyEmail}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.05] border border-white/10 text-[11px] font-mono text-[#F5E4B5] hover:border-amber-400 transition-colors"
+                className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10 text-[10px] font-mono text-[#F5E4B5] hover:border-amber-400"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                 <span>{copied ? 'Copied!' : 'Copy'}</span>
               </button>
             </div>
             <a
               href={`mailto:${contact.email}`}
-              className="font-serif text-lg sm:text-xl font-bold text-white hover:text-[#F5E4B5] transition-colors break-all"
+              className="font-serif text-base sm:text-lg font-bold text-white hover:text-[#F5E4B5] transition-colors break-all"
             >
               {contact.email}
             </a>
-            <p className="text-xs text-gray-400 mt-2 font-light">
-              Available for full-time roles, creative engineering sprints, and technical consultations.
+            <p className="text-[11px] text-gray-400 mt-1 font-light">
+              Available for full-time engineering roles, AI projects, and technical collaborations.
             </p>
           </div>
 
           {/* Social Profiles Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <a
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               onMouseEnter={() => soundFx.playHoverChime()}
-              className="glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between"
+              className="glass-panel p-3 rounded-xl border border-white/10 glass-panel-hover flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between mb-2">
-                <Linkedin className="w-5 h-5 text-[#0A66C2]" />
-                <ArrowUpRight className="w-3.5 h-3.5 text-gray-400" />
+              <div className="flex items-center justify-between mb-1">
+                <Linkedin className="w-4 h-4 text-[#0A66C2]" />
+                <ArrowUpRight className="w-3 h-3 text-gray-400" />
               </div>
-              <div>
-                <span className="font-serif text-xs font-semibold text-white block">LinkedIn</span>
-                <span className="font-mono text-[9px] text-gray-400">Connect</span>
-              </div>
+              <span className="font-serif text-[11px] font-semibold text-white block">LinkedIn</span>
             </a>
 
             <a
@@ -96,16 +90,13 @@ export default function ContactSection() {
               target="_blank"
               rel="noopener noreferrer"
               onMouseEnter={() => soundFx.playHoverChime()}
-              className="glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between"
+              className="glass-panel p-3 rounded-xl border border-white/10 glass-panel-hover flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between mb-2">
-                <Github className="w-5 h-5 text-white" />
-                <ArrowUpRight className="w-3.5 h-3.5 text-gray-400" />
+              <div className="flex items-center justify-between mb-1">
+                <Github className="w-4 h-4 text-white" />
+                <ArrowUpRight className="w-3 h-3 text-gray-400" />
               </div>
-              <div>
-                <span className="font-serif text-xs font-semibold text-white block">GitHub</span>
-                <span className="font-mono text-[9px] text-gray-400">Repositories</span>
-              </div>
+              <span className="font-serif text-[11px] font-semibold text-white block">GitHub</span>
             </a>
 
             <a
@@ -113,16 +104,13 @@ export default function ContactSection() {
               target="_blank"
               rel="noopener noreferrer"
               onMouseEnter={() => soundFx.playHoverChime()}
-              className="glass-panel p-4 rounded-2xl border border-white/10 glass-panel-hover flex flex-col justify-between"
+              className="glass-panel p-3 rounded-xl border border-white/10 glass-panel-hover flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between mb-2">
-                <Instagram className="w-5 h-5 text-[#E1306C]" />
-                <ArrowUpRight className="w-3.5 h-3.5 text-gray-400" />
+              <div className="flex items-center justify-between mb-1">
+                <Instagram className="w-4 h-4 text-[#E1306C]" />
+                <ArrowUpRight className="w-3 h-3 text-gray-400" />
               </div>
-              <div>
-                <span className="font-serif text-xs font-semibold text-white block">Instagram</span>
-                <span className="font-mono text-[9px] text-gray-400">Personal</span>
-              </div>
+              <span className="font-serif text-[11px] font-semibold text-white block">Instagram</span>
             </a>
           </div>
 
@@ -133,88 +121,79 @@ export default function ContactSection() {
             rel="noopener noreferrer"
             onClick={() => soundFx.playClickPulse()}
             onMouseEnter={() => soundFx.playHoverChime()}
-            className="p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/5 border border-amber-500/30 flex items-center justify-between glass-panel-hover"
+            className="p-3.5 rounded-xl bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/5 border border-amber-500/30 flex items-center justify-between glass-panel-hover"
           >
             <div>
-              <span className="font-serif text-sm font-semibold text-[#FFFBF0] block">
-                Download Official Resume
+              <span className="font-serif text-xs font-semibold text-[#FFFBF0] block">
+                Official Resume
               </span>
-              <span className="font-mono text-[10px] text-[#D4AF37]">
+              <span className="font-mono text-[9px] text-[#D4AF37]">
                 Harman_Sadhwani_Resume.pdf
               </span>
             </div>
-            <ArrowUpRight className="w-5 h-5 text-[#D4AF37]" />
+            <ArrowUpRight className="w-4 h-4 text-[#D4AF37]" />
           </a>
         </div>
 
         {/* Right Column: Direct Message Form */}
-        <div className="lg:col-span-7 glass-panel p-8 sm:p-10 rounded-3xl border border-white/15 relative">
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mb-2">
+        <div className="md:col-span-7 glass-panel p-5 sm:p-6 rounded-2xl border border-white/15">
+          <h3 className="font-serif text-lg font-bold text-white mb-1">
             Transmit an Encrypted Dispatch
           </h3>
-          <p className="text-xs text-gray-400 mb-6 font-light">
-            Send a direct query or invitation. All dispatches route directly to my personal developer inbox.
+          <p className="text-[11px] text-gray-400 mb-4 font-light">
+            All dispatches route directly to my personal developer inbox.
           </p>
 
           {formSent ? (
-            <div className="p-8 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-center animate-fadeIn">
-              <Sparkles className="w-8 h-8 text-[#D4AF37] mx-auto mb-3 animate-spin" />
-              <h4 className="font-serif text-lg font-bold text-white mb-1">
-                Dispatch Transmitted Successfully
+            <div className="p-6 rounded-xl bg-amber-500/10 border border-amber-500/40 text-center animate-fadeIn">
+              <Sparkles className="w-6 h-6 text-[#D4AF37] mx-auto mb-2 animate-spin" />
+              <h4 className="font-serif text-base font-bold text-white mb-0.5">
+                Dispatch Transmitted
               </h4>
               <p className="text-xs text-gray-300">
-                Thank you, {formData.name || 'Friend'}. I will review your message and respond promptly.
+                Thank you, {formData.name || 'Friend'}. I will review your message promptly.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-mono text-[10px] text-gray-300 uppercase tracking-wider mb-1.5">
-                    Your Name
-                  </label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. John Doe"
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors"
+                    placeholder="Your Name"
+                    className="w-full px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400"
                   />
                 </div>
                 <div>
-                  <label className="block font-mono text-[10px] text-gray-300 uppercase tracking-wider mb-1.5">
-                    Your Email
-                  </label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="e.g. john@domain.com"
-                    className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors"
+                    placeholder="Your Email"
+                    className="w-full px-3 py-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-mono text-[10px] text-gray-300 uppercase tracking-wider mb-1.5">
-                  Message Details
-                </label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Outline your project scope, inquiry, or collaborative vision..."
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 transition-colors resize-none"
+                  placeholder="Outline your project scope or inquiry..."
+                  className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-400 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 onMouseEnter={() => soundFx.playHoverChime()}
-                className="mt-2 w-full sm:w-auto self-start px-8 py-3 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F2E2BA] to-[#D4AF37] text-black font-semibold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:scale-105 transition-all"
+                className="self-start px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#F2E2BA] to-[#D4AF37] text-black font-semibold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(212,175,55,0.3)] hover:scale-105 transition-all"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Send Dispatch</span>
@@ -223,6 +202,6 @@ export default function ContactSection() {
           )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
