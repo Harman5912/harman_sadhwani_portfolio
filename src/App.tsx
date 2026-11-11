@@ -13,11 +13,14 @@ import Footer from './components/Footer';
 import IntroLoader from './components/IntroLoader';
 import ProjectModal from './components/ProjectModal';
 import CertificateModal from './components/CertificateModal';
+import SpatialHUD from './components/SpatialHUD';
+import CyberCursor from './components/CyberCursor';
 import { ProjectItem } from './data/portfolioData';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [sceneMode, setSceneMode] = useState<'cinematic' | 'wireframe' | 'quantum'>('cinematic');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [selectedCertificate, setSelectedCertificate] = useState<{
     title: string;
@@ -31,12 +34,12 @@ export default function App() {
   // Initialize Lenis Smooth Scroll
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.25,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.9,
+      wheelMultiplier: 0.95,
     });
     lenisRef.current = lenis;
 
@@ -67,7 +70,7 @@ export default function App() {
     const el = document.getElementById(id);
     if (el) {
       if (lenisRef.current) {
-        lenisRef.current.scrollTo(el, { offset: -30, duration: 1.5 });
+        lenisRef.current.scrollTo(el, { offset: -20, duration: 1.5 });
       } else {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -76,14 +79,24 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#07080B] text-[#F5F5F7] font-sans selection:bg-[#D4AF37] selection:text-black overflow-x-hidden">
+      {/* Interactive Cyber Reticle Cursor */}
+      <CyberCursor />
+
       {/* Introductory Cinematic Loader */}
       {loading && <IntroLoader onComplete={() => setLoading(false)} />}
 
-      {/* Persistent 3D WebGL Digital Kingdom Scene */}
-      <GrandKingdomScene scrollProgress={scrollProgress} />
+      {/* Persistent 3D WebGL Digital Kingdom Scene with Custom Shaders & Unreal Bloom */}
+      <GrandKingdomScene scrollProgress={scrollProgress} sceneMode={sceneMode} />
 
       {/* Floating Glass Navigation Header */}
       <Navbar onNavigate={scrollToSection} />
+
+      {/* Spatial HUD with 3D Mode Switcher & Telemetry */}
+      <SpatialHUD
+        scrollProgress={scrollProgress}
+        activeMode={sceneMode}
+        onChangeMode={(m) => setSceneMode(m)}
+      />
 
       {/* Foreground Content Stack */}
       <main className="relative z-10 flex flex-col pointer-events-auto">
