@@ -108,6 +108,8 @@ export const portfolioData = {
   ],
   contact: {
     email: 'sadhwaniharman@gmail.com',
+    whatsapp: 'https://wa.me/918318952798',
+    whatsappNumber: '+91 8318952798',
     linkedin: 'https://www.linkedin.com/in/harman-sadhwani-a659a6225/',
     github: 'https://github.com/Harman5912',
     instagram: 'https://www.instagram.com/harmansadhwani.07/',
