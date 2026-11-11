@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DustParticleTransition from './DustParticleTransition';
 import { soundFx } from '../utils/audio';
-import { ChevronUp, ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowUpDown, ArrowLeftRight } from 'lucide-react';
 
 export interface StageConfig {
   id: string;
@@ -25,9 +25,10 @@ export default function FocalStageViewport({
   const [phase, setPhase] = useState<'idle' | 'disintegrating' | 'assembling'>('idle');
   const [isLocked, setIsLocked] = useState(false);
 
+  const contentContainerRef = useRef<HTMLDivElement>(null);
   const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const wheelAccumulator = useRef(0);
-  const touchStartY = useRef<number | null>(null);
+  const horizontalWheelAccumulator = useRef(0);
+  const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
   // Transition to target stage with dust particle disintegration and assembly
   const triggerTransition = useCallback(
@@ -39,6 +40,11 @@ export default function FocalStageViewport({
       setPhase('disintegrating');
       soundFx.playClickPulse();
       soundFx.playHoverChime();
+
+      // Reset internal scroll of the active container when transmuting
+      if (contentContainerRef.current) {
+        contentContainerRef.current.scrollTop = 0;
+      }
 
       // Midpoint: swap content and begin particle convergence
       setTimeout(() => {
@@ -63,45 +69,42 @@ export default function FocalStageViewport({
     }
   }, [currentStage, displayedStage, isLocked, triggerTransition]);
 
-  // Handle Wheel Scroll (Fixed single-point stage stepped navigation)
+  // Handle Horizontal vs Vertical Wheel Navigation:
+  // - Vertical (deltaY): Smoothly scrolls the active section content up & down.
+  // - Horizontal (deltaX, Shift+Wheel): Switches to Next/Previous section with Dust Particles!
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      // Don't intercept if user is scrolling inside an internal scrollable element
-      const target = e.target as HTMLElement | null;
-      if (target && target.closest('.allow-inner-scroll')) {
-        const el = target.closest('.allow-inner-scroll') as HTMLElement;
-        const isAtTop = el.scrollTop <= 0 && e.deltaY < 0;
-        const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2 && e.deltaY > 0;
-        if (!isAtTop && !isAtBottom) {
-          return;
-        }
-      }
+      // If user is holding Shift or using trackpad horizontal gesture (deltaX)
+      const isHorizontalScroll = Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey;
 
-      e.preventDefault();
-      if (isLocked) return;
+      if (isHorizontalScroll) {
+        e.preventDefault();
+        if (isLocked) return;
 
-      wheelAccumulator.current += e.deltaY;
+        const delta = e.shiftKey ? e.deltaY : e.deltaX;
+        horizontalWheelAccumulator.current += delta;
 
-      if (Math.abs(wheelAccumulator.current) > 45) {
-        if (wheelAccumulator.current > 0) {
-          // Scroll Down -> Next Stage
-          if (displayedStage < stages.length - 1) {
-            triggerTransition(displayedStage + 1);
+        if (Math.abs(horizontalWheelAccumulator.current) > 35) {
+          if (horizontalWheelAccumulator.current > 0) {
+            // Right -> Next Section
+            if (displayedStage < stages.length - 1) {
+              triggerTransition(displayedStage + 1);
+            }
+          } else {
+            // Left -> Previous Section
+            if (displayedStage > 0) {
+              triggerTransition(displayedStage - 1);
+            }
           }
-        } else {
-          // Scroll Up -> Previous Stage
-          if (displayedStage > 0) {
-            triggerTransition(displayedStage - 1);
-          }
+          horizontalWheelAccumulator.current = 0;
         }
-        wheelAccumulator.current = 0;
-      }
 
-      // Reset wheel accumulator if user pauses
-      if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
-      lockTimerRef.current = setTimeout(() => {
-        wheelAccumulator.current = 0;
-      }, 250);
+        if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+        lockTimerRef.current = setTimeout(() => {
+          horizontalWheelAccumulator.current = 0;
+        }, 220);
+      }
+      // If vertical (deltaY): let normal internal scrolling scroll UP and DOWN in the section!
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
@@ -111,19 +114,32 @@ export default function FocalStageViewport({
     };
   }, [displayedStage, isLocked, stages.length, triggerTransition]);
 
-  // Handle Keyboard Arrows
+  // Handle Keyboard Arrows:
+  // - ArrowLeft / ArrowRight: Switch section with dust particles!
+  // - ArrowUp / ArrowDown: Scroll up & down in that section!
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isLocked) return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+
+      if (e.key === 'ArrowRight') {
         e.preventDefault();
         if (displayedStage < stages.length - 1) {
           triggerTransition(displayedStage + 1);
         }
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         if (displayedStage > 0) {
           triggerTransition(displayedStage - 1);
+        }
+      } else if (e.key === 'ArrowDown') {
+        // Scroll down within the active section
+        if (contentContainerRef.current) {
+          contentContainerRef.current.scrollBy({ top: 140, behavior: 'smooth' });
+        }
+      } else if (e.key === 'ArrowUp') {
+        // Scroll up within the active section
+        if (contentContainerRef.current) {
+          contentContainerRef.current.scrollBy({ top: -140, behavior: 'smooth' });
         }
       }
     };
@@ -132,23 +148,32 @@ export default function FocalStageViewport({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [displayedStage, isLocked, stages.length, triggerTransition]);
 
-  // Handle Touch Swipe on Mobile
+  // Handle Touch Navigation on Mobile / Tablets:
+  // - Horizontal Swipe: Switch section!
+  // - Vertical Swipe: Scroll inside the active section!
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY;
+      touchStartPos.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (touchStartY.current === null || isLocked) return;
-      const deltaY = touchStartY.current - e.touches[0].clientY;
+      if (!touchStartPos.current || isLocked) return;
+      const deltaX = touchStartPos.current.x - e.touches[0].clientX;
+      const deltaY = touchStartPos.current.y - e.touches[0].clientY;
 
-      if (Math.abs(deltaY) > 50) {
-        if (deltaY > 0 && displayedStage < stages.length - 1) {
+      // If horizontal swipe is dominant and exceeds threshold
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 45) {
+        if (deltaX > 0 && displayedStage < stages.length - 1) {
+          // Swipe Left -> Next Section
           triggerTransition(displayedStage + 1);
-        } else if (deltaY < 0 && displayedStage > 0) {
+        } else if (deltaX < 0 && displayedStage > 0) {
+          // Swipe Right -> Previous Section
           triggerTransition(displayedStage - 1);
         }
-        touchStartY.current = null;
+        touchStartPos.current = null;
       }
     };
 
@@ -161,17 +186,74 @@ export default function FocalStageViewport({
     };
   }, [displayedStage, isLocked, stages.length, triggerTransition]);
 
+  const prevStage = displayedStage > 0 ? stages[displayedStage - 1] : null;
+  const nextStage = displayedStage < stages.length - 1 ? stages[displayedStage + 1] : null;
+
   return (
-    <div className="fixed inset-0 z-20 flex items-center justify-center p-3 sm:p-6 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 z-20 flex items-center justify-center p-2 sm:p-6 overflow-hidden pointer-events-none select-none">
       {/* 1. Dust Particle Disintegration & Materialization Canvas */}
       <DustParticleTransition
         isTransitioning={phase !== 'idle'}
         phase={phase}
       />
 
-      {/* 2. Single Point Focal Stage Content Wrapper */}
+      {/* 2. Left Floating Section Switcher Wing (Horizontal Navigation) */}
+      <div className="hidden md:flex fixed left-5 top-1/2 -translate-y-1/2 z-30 pointer-events-auto">
+        <button
+          onClick={() => prevStage && triggerTransition(displayedStage - 1)}
+          disabled={!prevStage || isLocked}
+          onMouseEnter={() => prevStage && soundFx.playHoverChime()}
+          className={`group flex items-center gap-2 p-3 rounded-2xl glass-panel border transition-all duration-300 ${
+            prevStage
+              ? 'border-amber-400/30 hover:border-amber-400 hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer'
+              : 'border-white/5 opacity-20 cursor-not-allowed'
+          }`}
+          title="Previous Section [Left Arrow / Swipe Right]"
+        >
+          <ChevronLeft className="w-5 h-5 text-[#D4AF37] group-hover:-translate-x-1 transition-transform" />
+          {prevStage && (
+            <div className="text-left hidden lg:block pr-1">
+              <span className="block font-mono text-[8px] text-gray-400 tracking-wider">
+                PREV [←]
+              </span>
+              <span className="block font-serif text-xs font-bold text-[#F5E4B5]">
+                {prevStage.code} {prevStage.label}
+              </span>
+            </div>
+          )}
+        </button>
+      </div>
+
+      {/* 3. Right Floating Section Switcher Wing (Horizontal Navigation) */}
+      <div className="hidden md:flex fixed right-5 top-1/2 -translate-y-1/2 z-30 pointer-events-auto">
+        <button
+          onClick={() => nextStage && triggerTransition(displayedStage + 1)}
+          disabled={!nextStage || isLocked}
+          onMouseEnter={() => nextStage && soundFx.playHoverChime()}
+          className={`group flex items-center gap-2 p-3 rounded-2xl glass-panel border transition-all duration-300 ${
+            nextStage
+              ? 'border-amber-400/30 hover:border-amber-400 hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer'
+              : 'border-white/5 opacity-20 cursor-not-allowed'
+          }`}
+          title="Next Section [Right Arrow / Swipe Left]"
+        >
+          {nextStage && (
+            <div className="text-right hidden lg:block pl-1">
+              <span className="block font-mono text-[8px] text-gray-400 tracking-wider">
+                NEXT [→]
+              </span>
+              <span className="block font-serif text-xs font-bold text-[#F5E4B5]">
+                {nextStage.code} {nextStage.label}
+              </span>
+            </div>
+          )}
+          <ChevronRight className="w-5 h-5 text-[#D4AF37] group-hover:translate-x-1 transition-transform" />
+        </button>
+      </div>
+
+      {/* 4. Single Point Focal Stage Content Wrapper */}
       <div
-        className={`w-full max-w-5xl mx-auto flex flex-col items-center justify-center pointer-events-auto transition-all duration-300 ease-out ${
+        className={`w-full max-w-5xl mx-auto flex flex-col items-center justify-center pointer-events-auto transition-all duration-300 ease-out px-2 md:px-14 ${
           phase === 'disintegrating'
             ? 'opacity-0 scale-95 blur-md'
             : phase === 'assembling'
@@ -179,85 +261,46 @@ export default function FocalStageViewport({
             : 'opacity-100 scale-100 blur-0'
         }`}
       >
-        <div className="w-full max-h-[82vh] overflow-y-auto allow-inner-scroll pr-1 no-scrollbar flex flex-col items-center">
+        {/* Scrollable Container for exploring Up and Down in the active section */}
+        <div
+          ref={contentContainerRef}
+          tabIndex={0}
+          className="w-full max-h-[82vh] overflow-y-auto pr-1 no-scrollbar focus:outline-none flex flex-col items-center"
+        >
           {stages[displayedStage]?.component}
         </div>
       </div>
 
-      {/* 3. Stage Telemetry Navigation Spine (Right Side) */}
-      <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-3 pointer-events-auto z-30">
+      {/* 5. Bottom Navigation Telemetry Helper Pill */}
+      <div className="fixed bottom-16 sm:bottom-14 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex items-center gap-4 px-4 py-1.5 rounded-full glass-panel border border-amber-400/30 text-[10px] font-mono text-gray-300 shadow-xl">
+        {/* Mobile Left Arrow */}
         <button
-          onClick={() => displayedStage > 0 && triggerTransition(displayedStage - 1)}
-          disabled={displayedStage === 0 || isLocked}
-          className="p-2 rounded-full glass-panel hover:border-amber-400 disabled:opacity-30 disabled:hover:border-transparent transition-all"
-          title="Previous Stage [↑]"
+          onClick={() => prevStage && triggerTransition(displayedStage - 1)}
+          disabled={!prevStage || isLocked}
+          className="md:hidden disabled:opacity-20"
         >
-          <ChevronUp className="w-4 h-4 text-[#D4AF37]" />
+          <ChevronLeft className="w-4 h-4 text-[#D4AF37]" />
         </button>
 
-        <div className="flex flex-col gap-2 py-2">
-          {stages.map((st, idx) => {
-            const isActive = idx === displayedStage;
-            return (
-              <button
-                key={st.id}
-                onClick={() => triggerTransition(idx)}
-                onMouseEnter={() => soundFx.playHoverChime()}
-                className="group flex items-center gap-2.5 py-1 text-right focus:outline-none"
-              >
-                <span
-                  className={`font-mono text-[9px] tracking-wider transition-all duration-300 ${
-                    isActive
-                      ? 'text-[#F5E4B5] font-bold opacity-100 scale-105'
-                      : 'text-gray-500 opacity-0 group-hover:opacity-100'
-                  }`}
-                >
-                  {st.code} {st.label}
-                </span>
-                <span
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    isActive
-                      ? 'w-2.5 h-2.5 bg-[#D4AF37] shadow-[0_0_12px_#D4AF37]'
-                      : 'bg-white/20 group-hover:bg-amber-400/60'
-                  }`}
-                />
-              </button>
-            );
-          })}
+        <div className="flex items-center gap-2">
+          <span className="flex items-center gap-1 text-[#F5E4B5] font-semibold">
+            <ArrowLeftRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <span>[← / →] NEXT SECTION</span>
+          </span>
+          <span className="opacity-40">•</span>
+          <span className="flex items-center gap-1 text-gray-300">
+            <ArrowUpDown className="w-3.5 h-3.5 text-[#7AC7FF]" />
+            <span>[↑ / ↓] EXPLORE SECTION</span>
+          </span>
         </div>
 
+        {/* Mobile Right Arrow */}
         <button
-          onClick={() => displayedStage < stages.length - 1 && triggerTransition(displayedStage + 1)}
-          disabled={displayedStage === stages.length - 1 || isLocked}
-          className="p-2 rounded-full glass-panel hover:border-amber-400 disabled:opacity-30 disabled:hover:border-transparent transition-all"
-          title="Next Stage [↓]"
+          onClick={() => nextStage && triggerTransition(displayedStage + 1)}
+          disabled={!nextStage || isLocked}
+          className="md:hidden disabled:opacity-20"
         >
-          <ChevronDown className="w-4 h-4 text-[#D4AF37]" />
-        </button>
-
-        <div className="mt-2 text-[9px] font-mono text-gray-500 tracking-widest writing-vertical uppercase">
-          SCROLL TO TRANSMUTE
-        </div>
-      </div>
-
-      {/* 4. Mobile Stage Indicator Pill (Bottom Center) */}
-      <div className="lg:hidden fixed bottom-16 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex items-center gap-3 px-4 py-1.5 rounded-full glass-panel border border-amber-400/30 text-[10px] font-mono text-[#F5E4B5]">
-        <button
-          onClick={() => displayedStage > 0 && triggerTransition(displayedStage - 1)}
-          disabled={displayedStage === 0 || isLocked}
-          className="disabled:opacity-30"
-        >
-          <ChevronUp className="w-4 h-4 text-[#D4AF37]" />
-        </button>
-        <span className="font-bold tracking-wider">
-          {stages[displayedStage]?.code} · {stages[displayedStage]?.label}
-        </span>
-        <button
-          onClick={() => displayedStage < stages.length - 1 && triggerTransition(displayedStage + 1)}
-          disabled={displayedStage === stages.length - 1 || isLocked}
-          className="disabled:opacity-30"
-        >
-          <ChevronDown className="w-4 h-4 text-[#D4AF37]" />
+          <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
         </button>
       </div>
     </div>
