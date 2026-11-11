@@ -1,7 +1,6 @@
 import React from 'react';
 import { ProjectItem } from '../data/portfolioData';
 import { X, ExternalLink, Github, Check, Calendar } from 'lucide-react';
-import { soundFx } from '../utils/audio';
 
 interface ProjectModalProps {
   project: ProjectItem | null;
@@ -17,7 +16,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         {/* Close Button */}
         <button
           onClick={() => {
-            soundFx.playClickPulse();
             onClose();
           }}
           className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 border border-white/20 text-gray-300 hover:text-white transition-colors"
@@ -112,7 +110,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundFx.playClickPulse()}
                 className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5E4B5] text-black font-semibold text-xs tracking-wider flex items-center gap-2 hover:scale-105 transition-all shadow-[0_0_15px_rgba(212,175,55,0.3)]"
               >
                 <ExternalLink className="w-4 h-4" />
@@ -125,7 +122,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundFx.playClickPulse()}
                 className="px-5 py-2.5 rounded-full glass-panel glass-panel-hover text-xs font-semibold text-white tracking-wider flex items-center gap-2 border border-white/20"
               >
                 <Github className="w-4 h-4 text-[#D4AF37]" />

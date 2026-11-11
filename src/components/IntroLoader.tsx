@@ -46,7 +46,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
           HARMAN SADHWANI
         </h1>
         <p className="font-mono text-xs tracking-[0.3em] text-[#D4AF37] uppercase mb-8">
-          IMMERSIVE 3D DIGITAL KINGDOM
+          CREATIVE DEVELOPER · AI SYSTEMS
         </p>
 
         {/* Hairline Gold Progress Bar */}
@@ -59,7 +59,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
 
         {/* Counter & Status */}
         <div className="flex items-center justify-between w-56 sm:w-72 text-[10px] font-mono text-gray-400 tracking-wider">
-          <span>INITIALIZING SHADERS</span>
+          <span>LOADING</span>
           <span className="text-[#F5E4B5] font-semibold">{progress}%</span>
         </div>
       </div>

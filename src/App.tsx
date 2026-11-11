@@ -11,16 +11,12 @@ import ContactSection from './components/ContactSection';
 import IntroLoader from './components/IntroLoader';
 import ProjectModal from './components/ProjectModal';
 import CertificateModal from './components/CertificateModal';
-import SpatialHUD from './components/SpatialHUD';
-import CyberCursor from './components/CyberCursor';
 import FocalStageViewport, { StageConfig } from './components/FocalStageViewport';
 import { ProjectItem } from './data/portfolioData';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [currentStage, setCurrentStage] = useState(0);
-  // Fixed to Wireframe Shader as requested
-  const [sceneMode, setSceneMode] = useState<'cinematic' | 'wireframe' | 'quantum'>('wireframe');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [selectedCertificate, setSelectedCertificate] = useState<{
     title: string;
@@ -29,13 +25,13 @@ export default function App() {
     description: string;
   } | null>(null);
 
-  // 7 Steady Viewport Stages anchored at the single focal point
+  // 7 Viewport Stages anchored at the single focal point
   const stages: StageConfig[] = useMemo(
     () => [
       {
         id: 'hero',
         code: '00',
-        label: 'HERO',
+        label: 'INTRO',
         component: (
           <Hero
             onExplore={() => setCurrentStage(1)}
@@ -72,7 +68,7 @@ export default function App() {
       {
         id: 'experience',
         code: '05',
-        label: 'JOURNEY',
+        label: 'EXPERIENCE',
         component: <ExperienceEducationSection />,
       },
       {
@@ -85,41 +81,31 @@ export default function App() {
     []
   );
 
-  // Compute normalized 3D camera travel progress (0 to 1) based on current stage
+  // Compute normalized camera travel progress (0 to 1) based on current stage
   const scrollProgress = stages.length > 1 ? currentStage / (stages.length - 1) : 0;
 
   return (
     <div className="relative w-screen h-screen bg-[#07080B] text-[#F5F5F7] font-sans selection:bg-[#D4AF37] selection:text-black overflow-hidden select-none">
-      {/* Interactive Cyber Reticle Cursor */}
-      <CyberCursor />
-
-      {/* Introductory Cinematic Loader */}
+      {/* Introductory loader */}
       {loading && <IntroLoader onComplete={() => setLoading(false)} />}
 
-      {/* Persistent 3D WebGL Digital Kingdom Scene with Wireframe Shader & Unreal Bloom */}
-      <GrandKingdomScene scrollProgress={scrollProgress} sceneMode={sceneMode} />
+      {/* 3D background scene */}
+      <GrandKingdomScene scrollProgress={scrollProgress} />
 
-      {/* Floating Glass Navigation Header */}
+      {/* Navigation */}
       <Navbar
         currentStage={currentStage}
         onNavigateStage={(idx) => setCurrentStage(idx)}
       />
 
-      {/* Single Point Focal Stage Viewport with Golden Dust Particle Dissolve / Assemble */}
+      {/* Stage viewport with dust particle transition */}
       <FocalStageViewport
         stages={stages}
         currentStage={currentStage}
         onStageChange={(newIdx) => setCurrentStage(newIdx)}
       />
 
-      {/* Spatial HUD with 3D Mode Switcher & Telemetry */}
-      <SpatialHUD
-        scrollProgress={scrollProgress}
-        activeMode={sceneMode}
-        onChangeMode={(m) => setSceneMode(m)}
-      />
-
-      {/* Interactive Modals */}
+      {/* Modals */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}

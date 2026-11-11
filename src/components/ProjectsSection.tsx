@@ -3,7 +3,6 @@ import { flagshipProjects, additionalProjects, ProjectItem } from '../data/portf
 import { Canvas } from '@react-three/fiber';
 import InteractiveProjectModel from './canvas/InteractiveProjectModel';
 import { ExternalLink, Github, Terminal, Check, Eye, Sparkles, Layers, Grid } from 'lucide-react';
-import { soundFx } from '../utils/audio';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -17,34 +16,32 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
   const currentProject = flagshipProjects[selectedFlagshipIndex];
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6">
+    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6 select-none">
       {/* Section Header */}
       <div className="text-center max-w-xl mx-auto mb-4">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border-amber-500/30 text-[10px] font-mono text-[#D4AF37] tracking-widest uppercase mb-2">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border-amber-500/40 text-[10px] font-mono text-[#D4AF37] tracking-widest uppercase mb-2 shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
           <Terminal className="w-3.5 h-3.5 text-[#F5E4B5]" />
-          <span>FLAGSHIPS & INNOVATIONS // 03</span>
+          <span>PROJECTS // 03</span>
         </div>
-        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase">
-          Featured <span className="text-gold-gradient">Architectures</span>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase heading-shadow">
+          Featured <span className="text-gold-gradient">Projects</span>
         </h2>
         <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-2" />
       </div>
 
       {/* Flagship Selector Tabs */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-        <div className="flex items-center gap-1.5 p-1 rounded-full glass-panel border border-amber-400/25">
+        <div className="flex items-center gap-1.5 p-1 rounded-full glass-panel border border-amber-400/30">
           {flagshipProjects.map((proj, idx) => (
             <button
               key={proj.id}
               onClick={() => {
-                soundFx.playClickPulse();
                 setSelectedFlagshipIndex(idx);
               }}
-              onMouseEnter={() => soundFx.playHoverChime()}
               className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all ${
                 selectedFlagshipIndex === idx
                   ? 'bg-gradient-to-r from-[#D4AF37] to-[#F5E4B5] text-black font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)]'
-                  : 'text-gray-300 hover:text-white'
+                  : 'text-gray-200 hover:text-white'
               }`}
             >
               0{idx + 1} {proj.name}
@@ -54,14 +51,12 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
 
         <button
           onClick={() => {
-            soundFx.playClickPulse();
             setViewAllModal(true);
           }}
-          onMouseEnter={() => soundFx.playHoverChime()}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-panel border border-white/10 hover:border-amber-400 text-xs font-mono text-gray-300 hover:text-[#F5E4B5] transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full glass-panel border border-white/10 hover:border-amber-400 text-xs font-mono text-gray-200 hover:text-[#F5E4B5] transition-colors"
         >
           <Grid className="w-3.5 h-3.5 text-[#D4AF37]" />
-          <span>All Prototypes (10)</span>
+          <span>All Projects ({additionalProjects.length})</span>
         </button>
       </div>
 
@@ -69,11 +64,11 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="glass-panel rounded-3xl border border-amber-500/30 p-5 sm:p-7 relative overflow-hidden transition-all duration-500 hover:border-amber-400 hover:shadow-[0_20px_80px_rgba(212,175,55,0.2)] text-left"
+        className="glass-panel rounded-3xl border border-amber-500/35 p-5 sm:p-7 relative overflow-hidden transition-all duration-500 hover:border-amber-400 hover:shadow-[0_20px_80px_rgba(212,175,55,0.25)] text-left shadow-2xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           {/* Left Media Stage */}
-          <div className="md:col-span-6 relative rounded-2xl overflow-hidden border border-amber-400/30 aspect-video bg-black/80 shadow-2xl group">
+          <div className="md:col-span-6 relative rounded-2xl overflow-hidden border border-amber-400/40 aspect-video bg-black/85 shadow-2xl group">
             {currentProject.video ? (
               <video
                 key={currentProject.video}
@@ -94,9 +89,9 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
 
-            <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-amber-400/50 font-mono text-[9px] text-[#F5E4B5] tracking-widest uppercase flex items-center gap-1">
+            <div className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-black/85 backdrop-blur-md border border-amber-400/50 font-mono text-[9px] text-[#F5E4B5] tracking-widest uppercase flex items-center gap-1 shadow-lg">
               <Sparkles className="w-2.5 h-2.5 text-[#D4AF37]" />
-              <span>FLAGSHIP // 0{selectedFlagshipIndex + 1}</span>
+              <span>FLAGSHIP {selectedFlagshipIndex + 1}</span>
             </div>
 
             <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-emerald-500/25 backdrop-blur-md border border-emerald-400/50 font-mono text-[9px] text-emerald-300 tracking-wider">
@@ -119,25 +114,25 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
           <div className="md:col-span-6 flex flex-col justify-between">
             <div>
               {currentProject.organization && (
-                <div className="inline-flex items-center gap-1 font-mono text-[9px] text-[#D4AF37] uppercase tracking-widest mb-1 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                <div className="inline-flex items-center gap-1 font-mono text-[9px] text-[#D4AF37] uppercase tracking-widest mb-1 bg-amber-500/15 px-2 py-0.5 rounded border border-amber-500/30">
                   <Layers className="w-3 h-3" />
-                  <span>ECOSYSTEM: {currentProject.organization}</span>
+                  <span>BUILT AT {currentProject.organization}</span>
                 </div>
               )}
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mb-1">
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mb-1 heading-shadow">
                 {currentProject.name}
               </h3>
-              <p className="font-serif text-xs text-[#F5E4B5] mb-2 font-medium">
+              <p className="font-serif text-xs text-[#F5E4B5] mb-2 font-medium drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                 {currentProject.tagline}
               </p>
-              <p className="text-xs text-gray-300 leading-relaxed font-light mb-4">
+              <p className="text-xs text-gray-200 leading-relaxed font-light mb-4">
                 {currentProject.description}
               </p>
 
               {/* Highlights */}
               <div className="flex flex-col gap-1.5 mb-4">
                 {currentProject.highlights.map((h, i) => (
-                  <div key={i} className="flex items-start gap-2 text-[11px] text-gray-300">
+                  <div key={i} className="flex items-start gap-2 text-[11px] text-gray-200">
                     <Check className="w-3 h-3 text-[#D4AF37] shrink-0 mt-0.5" />
                     <span>{h}</span>
                   </div>
@@ -149,7 +144,7 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                 {currentProject.technologies.map((tech, i) => (
                   <span
                     key={i}
-                    className="px-2 py-0.5 rounded bg-white/[0.05] border border-amber-400/20 text-[9px] font-mono text-gray-200"
+                    className="px-2 py-0.5 rounded bg-white/[0.06] border border-amber-400/25 text-[9px] font-mono text-gray-200"
                   >
                     {tech}
                   </span>
@@ -164,7 +159,6 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                   href={currentProject.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => soundFx.playClickPulse()}
                   className="px-4 py-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5E4B5] text-black font-bold text-xs tracking-wider flex items-center gap-1.5 shadow-[0_0_15px_rgba(212,175,55,0.4)] hover:scale-105 transition-all"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -177,7 +171,6 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                   href={currentProject.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => soundFx.playClickPulse()}
                   className="px-4 py-2 rounded-full glass-panel glass-panel-hover text-xs font-semibold text-white tracking-wider flex items-center gap-1.5 border border-white/20 hover:border-amber-400"
                 >
                   <Github className="w-3.5 h-3.5 text-[#D4AF37]" />
@@ -187,13 +180,12 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
 
               <button
                 onClick={() => {
-                  soundFx.playClickPulse();
                   onSelectProject(currentProject);
                 }}
-                className="px-3.5 py-2 rounded-full glass-panel glass-panel-hover text-xs font-medium text-gray-300 hover:text-white flex items-center gap-1.5 border border-white/10"
+                className="px-3.5 py-2 rounded-full glass-panel glass-panel-hover text-xs font-medium text-gray-200 hover:text-white flex items-center gap-1.5 border border-white/10"
               >
                 <Eye className="w-3.5 h-3.5 text-[#F5E4B5]" />
-                <span>Deep Inspect</span>
+                <span>View Details</span>
               </button>
             </div>
           </div>
@@ -202,20 +194,20 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
 
       {/* Modal for All Additional Competitive Prototypes */}
       {viewAllModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-fadeIn">
-          <div className="glass-panel w-full max-w-4xl max-h-[85vh] rounded-3xl border border-amber-500/30 p-6 flex flex-col text-left overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/92 backdrop-blur-2xl animate-fadeIn">
+          <div className="glass-panel w-full max-w-4xl max-h-[85vh] rounded-3xl border border-amber-500/40 p-6 flex flex-col text-left overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div>
-                <h3 className="font-serif text-xl font-bold text-white">
-                  Competitive Systems & Academic Prototypes
+                <h3 className="font-serif text-xl font-bold text-white heading-shadow">
+                  Hackathons, Research & Additional Projects
                 </h3>
-                <p className="text-xs text-gray-400">
-                  National Hackathon solutions, research publications, and applied engineering systems.
+                <p className="text-xs text-gray-300">
+                  Hackathon solutions, research publications, and applied engineering work.
                 </p>
               </div>
               <button
                 onClick={() => setViewAllModal(false)}
-                className="p-2 rounded-full glass-panel text-gray-300 hover:text-white"
+                className="p-2 rounded-full glass-panel text-gray-200 hover:text-white"
               >
                 ✕
               </button>
@@ -237,8 +229,8 @@ export default function ProjectsSection({ onSelectProject }: ProjectsSectionProp
                     className="w-full aspect-video object-cover rounded-lg mb-2"
                   />
                   <span className="font-mono text-[9px] text-[#D4AF37] block uppercase">{p.category}</span>
-                  <h4 className="font-serif text-sm font-semibold text-white mb-1">{p.name}</h4>
-                  <p className="text-[11px] text-gray-400 line-clamp-2">{p.description}</p>
+                  <h4 className="font-serif text-sm font-semibold text-white mb-1 heading-shadow">{p.name}</h4>
+                  <p className="text-[11px] text-gray-300 line-clamp-2">{p.description}</p>
                 </div>
               ))}
             </div>

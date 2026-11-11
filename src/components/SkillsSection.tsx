@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { skillsCategories, SkillNode } from '../data/portfolioData';
-import { Sparkles, Code2, Cpu, Globe, Database, CheckCircle2 } from 'lucide-react';
-import { soundFx } from '../utils/audio';
+import { Code2, Cpu, Globe, Database, CheckCircle2 } from 'lucide-react';
 
 export default function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<string>('core-languages');
@@ -18,15 +17,15 @@ export default function SkillsSection() {
     skillsCategories.find((c) => c.id === activeCategory)?.skills || skillsCategories[0].skills;
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6">
+    <div className="w-full max-w-5xl mx-auto py-4 sm:py-6 select-none">
       {/* Section Header */}
       <div className="text-center max-w-xl mx-auto mb-5">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border-amber-500/30 text-[10px] font-mono text-[#D4AF37] tracking-widest uppercase mb-2">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border-amber-500/40 text-[10px] font-mono text-[#D4AF37] tracking-widest uppercase mb-2 shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
           <Cpu className="w-3.5 h-3.5 text-[#F5E4B5]" />
-          <span>TECHNICAL MATRIX // 02</span>
+          <span>SKILLS // 02</span>
         </div>
-        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase">
-          Engineered <span className="text-gold-gradient">Capabilities</span>
+        <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-white uppercase heading-shadow">
+          Technical <span className="text-gold-gradient">Expertise</span>
         </h2>
         <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mt-2" />
       </div>
@@ -40,14 +39,12 @@ export default function SkillsSection() {
             <button
               key={cat.id}
               onClick={() => {
-                soundFx.playClickPulse();
                 setActiveCategory(cat.id);
               }}
-              onMouseEnter={() => soundFx.playHoverChime()}
               className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all ${
                 isActive
                   ? 'bg-gradient-to-r from-[#D4AF37] to-[#F5E4B5] text-black font-bold shadow-[0_0_15px_rgba(212,175,55,0.4)]'
-                  : 'glass-panel text-gray-300 hover:text-white hover:border-amber-400/40'
+                  : 'glass-panel text-gray-200 hover:text-white hover:border-amber-400/50'
               }`}
             >
               <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-black' : 'text-[#D4AF37]'}`} />
@@ -65,22 +62,20 @@ export default function SkillsSection() {
             <div
               key={`${skill.name}-${index}`}
               onClick={() => {
-                soundFx.playClickPulse();
                 setSelectedSkill(isSelected ? null : skill);
               }}
-              onMouseEnter={() => soundFx.playHoverChime()}
               className={`glass-panel p-4 rounded-xl border text-left cursor-pointer transition-all ${
                 isSelected
-                  ? 'border-amber-400 bg-amber-500/[0.1] shadow-[0_0_20px_rgba(212,175,55,0.25)]'
-                  : 'border-white/10 hover:border-amber-500/40 hover:bg-white/[0.04]'
+                  ? 'border-amber-400 bg-amber-500/[0.15] shadow-[0_0_20px_rgba(212,175,55,0.3)]'
+                  : 'border-white/10 hover:border-amber-500/50 hover:bg-white/[0.05]'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="w-7 h-7 rounded-md bg-amber-500/10 border border-amber-500/30 font-mono text-[10px] font-bold text-[#F5E4B5] flex items-center justify-center">
+                  <span className="w-7 h-7 rounded-md bg-amber-500/20 border border-amber-500/40 font-mono text-[10px] font-bold text-[#F5E4B5] flex items-center justify-center">
                     {skill.iconTag}
                   </span>
-                  <h3 className="font-serif text-xs font-semibold text-white tracking-wide">
+                  <h3 className="font-serif text-xs font-semibold text-white tracking-wide heading-shadow">
                     {skill.name}
                   </h3>
                 </div>
@@ -97,7 +92,7 @@ export default function SkillsSection() {
                 />
               </div>
 
-              <p className="text-[11px] text-gray-400 leading-relaxed font-light">
+              <p className="text-[11px] text-gray-300 leading-relaxed font-light">
                 {skill.context}
               </p>
             </div>
@@ -106,7 +101,7 @@ export default function SkillsSection() {
       </div>
 
       {/* Core Masteries Ribbon */}
-      <div className="p-3.5 glass-panel rounded-2xl border border-amber-500/20 text-center">
+      <div className="p-3.5 glass-panel rounded-2xl border border-amber-500/30 text-center">
         <div className="flex flex-wrap items-center justify-center gap-2">
           {[
             'Python',
@@ -128,8 +123,7 @@ export default function SkillsSection() {
           ].map((tag, idx) => (
             <span
               key={idx}
-              onMouseEnter={() => soundFx.playHoverChime()}
-              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-amber-400/20 text-[10px] font-mono text-gray-300"
+              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-amber-400/25 text-[10px] font-mono text-gray-200"
             >
               <CheckCircle2 className="w-3 h-3 text-[#D4AF37]" />
               <span>{tag}</span>

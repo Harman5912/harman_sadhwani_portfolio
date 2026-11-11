@@ -19,12 +19,19 @@ export interface ProjectItem {
   modelType: 'monolith' | 'crystal' | 'prism' | 'sphere' | 'torus';
 }
 
+export type AchievementGroup =
+  | 'Hackathons & Innovation'
+  | 'Technical Competitions'
+  | 'Open Source Contributions'
+  | 'Institutional Recognition';
+
 export interface AchievementItem {
   id: string;
   title: string;
   result: string;
   dateOrContext: string;
-  category: 'Award' | 'Conference' | 'Hackathon';
+  category: 'Award' | 'Conference' | 'Hackathon' | 'Open Source';
+  group: AchievementGroup;
   highlight: string;
   description: string;
   badgeLabel: string;
@@ -50,23 +57,23 @@ export const portfolioData = {
   profile: {
     name: 'Harman Sadhwani',
     title: 'Creative Developer | Full-Stack Developer | AI Systems Builder',
-    tagline: 'BUILD. INNOVATE. ENGINEER THE FUTURE.',
-    bio: 'BCA Scholar, Creative Developer, and AI Systems Architect crafting immersive WebGL 3D experiences, autonomous agentic workflows, and high-performance digital architectures.',
-    secondaryBio: 'Specializing in the intersection of real-time 3D graphics, LLM agent ecosystems, and distributed cloud engineering. Building digital kingdoms where computational precision meets cinematic storytelling.',
+    tagline: 'Creative Developer · Full-Stack Engineer · AI Systems Builder',
+    bio: 'BCA scholar and creative developer building web applications, autonomous AI workflows, and high-performance interfaces.',
+    secondaryBio: 'Focused on the intersection of real-time 3D graphics, LLM agent ecosystems, and distributed cloud engineering — building software where engineering precision meets thoughtful design.',
     status: 'Available for World-Class Engineering Opportunities',
     location: 'India',
     avatar: '/Harman.jpg',
     resumeUrl: '/Harman_Sadhwani_Resume.pdf',
     stats: [
       { label: 'Major Flagships', value: '3+' },
-      { label: 'Hackathons & Awards', value: '8+' },
+      { label: 'Hackathons & Awards', value: '14+' },
       { label: 'Interactive Prototypes', value: '25+' },
-      { label: 'Target Frame Rate', value: '60 FPS' },
+      { label: 'Certifications', value: '14' },
     ],
     pillars: [
       {
         title: 'Creative WebGL & 3D',
-        description: 'Building cinematic, high-performance 3D spatial experiences with Three.js, React Three Fiber, custom shaders, and instanced particles.',
+        description: 'Building high-performance interactive interfaces with Three.js, React Three Fiber, custom shaders, and instanced particles.',
         accent: 'from-amber-400 to-yellow-600',
       },
       {
@@ -146,11 +153,11 @@ export const skillsCategories: SkillCategory[] = [
   {
     id: 'frontend-3d',
     title: 'Creative 3D & Frontend',
-    subtitle: 'Immersive spatial WebGL, component architecture, and responsive UX',
+    subtitle: 'Interactive WebGL, component architecture, and responsive UX',
     skills: [
       { name: 'Three.js & WebGL', context: 'Custom geometries, PBR materials, instancing & shader techniques', level: 92, iconTag: '3D' },
       { name: 'React & React Three Fiber', context: 'Declarative 3D scene graphs, hooks, state & virtual DOM', level: 94, iconTag: 'R3F' },
-      { name: 'GSAP & ScrollTrigger', context: 'Cinematic timelines, choreographed camera travel & scroll physics', level: 93, iconTag: 'GSAP' },
+      { name: 'GSAP & ScrollTrigger', context: 'Animation timelines, camera transitions & scroll behaviour', level: 93, iconTag: 'GSAP' },
       { name: 'Angular', context: 'Structured single-page application architecture & reactive templates', level: 84, iconTag: 'NG' },
       { name: 'Tailwind CSS & Modern Styling', context: 'High-fashion glassmorphism, fluid typography & micro-interactions', level: 96, iconTag: 'CSS' },
       { name: 'HTML5 & Canvas APIs', context: 'Semantic markup, accessible structures & 2D/3D canvas rendering', level: 95, iconTag: 'HTML' },
@@ -334,7 +341,7 @@ export const additionalProjects: ProjectItem[] = [
     year: '2026',
     status: 'Completed',
     type: 'Hackathon',
-    image: '/c7.jpeg',
+    image: '/c9.jpeg',
     highlights: ['Second Round Qualification', 'Enterprise workflow optimization'],
     filterTags: ['Hackathon', 'Enterprise'],
     modelType: 'monolith',
@@ -368,6 +375,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: '1st Runner-Up',
     certificateRef: '/c1.jpeg',
     color: '#D4AF37',
+    group: 'Technical Competitions',
   },
   {
     id: 'ichis-2026-win',
@@ -380,6 +388,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: '2nd Runner-Up',
     certificateRef: '/c2.jpeg',
     color: '#EAD7A1',
+    group: 'Institutional Recognition',
   },
   {
     id: 'ichis-2026-part',
@@ -392,6 +401,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: 'Research Paper',
     certificateRef: '/c3.jpeg',
     color: '#C5A059',
+    group: 'Institutional Recognition',
   },
   {
     id: 'hackathon-2-0',
@@ -404,6 +414,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: '2nd Position',
     certificateRef: '/c4.jpeg',
     color: '#D4AF37',
+    group: 'Hackathons & Innovation',
   },
   {
     id: 'sih-2025',
@@ -416,6 +427,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: 'Round 2 Qualified',
     certificateRef: '/c5.jpeg',
     color: '#F5E4B5',
+    group: 'Hackathons & Innovation',
   },
   {
     id: 'national-conference',
@@ -428,6 +440,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: '1st Position Paper',
     certificateRef: '/c6.jpeg',
     color: '#D4AF37',
+    group: 'Technical Competitions',
   },
   {
     id: 'hackathon-feb-2025',
@@ -440,6 +453,7 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: 'Hackathon Sprint',
     certificateRef: '/c7.jpeg',
     color: '#C5A059',
+    group: 'Hackathons & Innovation',
   },
   {
     id: 'hackofiesta-6',
@@ -452,7 +466,99 @@ export const achievementsList: AchievementItem[] = [
     badgeLabel: 'Yellow Ribbon Medal',
     certificateRef: '/c8.jpeg',
     color: '#F5E4B5',
+    group: 'Hackathons & Innovation',
   },
+  {
+    id: 'msme-idea-hackathon-6-gniot',
+    title: 'MSME Idea Hackathon 6.0 (GNIOT)',
+    result: 'Participant · Certificate of Appreciation',
+    dateOrContext: '25–26 Aug 2026 · GNIOT, Greater Noida',
+    category: 'Hackathon',
+    highlight: 'MSME GNIOT Business Incubation Centre',
+    description:
+      'Official Certificate of Appreciation for participation in MSME Idea Hackathon 6.0, organised by the Ministry of MSME, Government of India, on 25th & 26th August 2026 at the MSME GNIOT Business Incubation Centre, Greater Noida — certified as a Participant representing Allenhouse Business School.',
+    badgeLabel: 'MSME Participant',
+    certificateRef: '/c9.jpeg',
+    color: '#F5E4B5',
+    group: 'Hackathons & Innovation',
+  },
+  {
+    id: 'bizhack-26-allenhouse',
+    title: 'BizHack 26 · Allenhouse Institute of Management',
+    result: 'Participant · Certificate of Participation',
+    dateOrContext: '26 Sept 2026 · Rooma, Kanpur',
+    category: 'Hackathon',
+    highlight: 'Allenhouse Startup Foundation · IIC',
+    description:
+      'Certificate of Participation for enthusiastically participating in BizHack 2026, held on 26 September 2026 at Allenhouse Campus, Rooma, Kanpur, presented with the Allenhouse Startup Foundation, Allen Cooper and the Institution\'s Innovation Council.',
+    badgeLabel: 'BizHack Participant',
+    certificateRef: '/c10.jpeg',
+    color: '#EAD7A1',
+    group: 'Hackathons & Innovation',
+  },
+  {
+    id: 'web-kriti-2026-winner',
+    title: 'Web-Kriti 2026 · Website Development Competition',
+    result: 'Winner · First Position',
+    dateOrContext: '10 Oct 2026 · Allenhouse Institute of Technology',
+    category: 'Award',
+    highlight: 'Adjudged Winner · AI-Automated Portfolio',
+    description:
+      'Certified winner of Web Kriti 2026, the Website Development Competition at Allenhouse Institute of Technology, Kanpur, held on 10th October 2026 — adjudged Winner by the judging panel for an automated, AI-powered portfolio build (BCA 3rd Year entry).',
+    badgeLabel: 'Winner',
+    certificateRef: '/c11.jpeg',
+    color: '#D4AF37',
+    group: 'Technical Competitions',
+  },
+  {
+    id: 'hacktoberfest-2026-ai-club',
+    title: 'Hacktoberfest 2026 · Hack Day Kanpur × AI Club',
+    result: 'Certificate of Attendance',
+    dateOrContext: '30 Oct 2026 · Kanpur',
+    category: 'Open Source',
+    highlight: 'Powered by MLH × DEV · DigitalOcean',
+    description:
+      'Certificate of Attendance certifying in-person attendance at Hacktoberfest Hack Day Kanpur hosted with AI Club on October 30, 2026, part of the Hacktoberfest 26 open-source programme powered by Major League Hacking × DEV with DigitalOcean as presenting partner.',
+    badgeLabel: 'Open Source',
+    certificateRef: '/c12.jpg',
+    color: '#F5E4B5',
+    group: 'Open Source Contributions',
+  },
+  {
+    id: 'hacktoberfest-2026-allenhouse',
+    title: 'Hacktoberfest 2026 · Hack Day Kanpur × Allenhouse Institute of Technology',
+    result: 'Certificate of Attendance',
+    dateOrContext: '31 Oct 2026 · Kanpur',
+    category: 'Open Source',
+    highlight: 'Institution\'s Innovation Council Host',
+    description:
+      'Certificate of Attendance certifying in-person attendance at Hacktoberfest Hack Day Kanpur hosted with Allenhouse Institute of Technology on October 31, 2026, as part of the Hacktoberfest 26 open-source programme.',
+    badgeLabel: 'Open Source',
+    certificateRef: '/c13.jpg',
+    color: '#EAD7A1',
+    group: 'Open Source Contributions',
+  },
+  {
+    id: 'hacktoberfest-2026-gos-community',
+    title: 'Hacktoberfest 2026 · Hack Day Kanpur × GOS Community',
+    result: 'Certificate of Attendance',
+    dateOrContext: '1 Nov 2026 · Kanpur',
+    category: 'Open Source',
+    highlight: 'Developer Community Hack Day',
+    description:
+      'Certificate of Attendance certifying in-person attendance at Hacktoberfest Hack Day Kanpur hosted with GOS Community on November 1, 2026, closing the Hacktoberfest 26 open-source celebration alongside the developer community.',
+    badgeLabel: 'Open Source',
+    certificateRef: '/c14.jpg',
+    color: '#C5A059',
+    group: 'Open Source Contributions',
+  },
+];
+
+export const achievementGroups: AchievementGroup[] = [
+  'Hackathons & Innovation',
+  'Technical Competitions',
+  'Open Source Contributions',
+  'Institutional Recognition',
 ];
 
 export const certifications = [

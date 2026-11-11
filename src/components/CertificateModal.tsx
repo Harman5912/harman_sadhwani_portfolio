@@ -1,6 +1,5 @@
 import React from 'react';
 import { X, Award, ExternalLink } from 'lucide-react';
-import { soundFx } from '../utils/audio';
 
 interface CertificateModalProps {
   certificate: {
@@ -21,7 +20,6 @@ export default function CertificateModal({ certificate, onClose }: CertificateMo
         {/* Close Button */}
         <button
           onClick={() => {
-            soundFx.playClickPulse();
             onClose();
           }}
           className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/70 border border-white/20 text-gray-300 hover:text-white transition-colors"
@@ -61,7 +59,6 @@ export default function CertificateModal({ certificate, onClose }: CertificateMo
               href={certificate.image}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => soundFx.playClickPulse()}
               className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5E4B5] text-black font-semibold text-xs tracking-wider flex items-center gap-2 hover:scale-105 transition-all shadow-[0_0_15px_rgba(212,175,55,0.3)]"
             >
               <span>Open Full Resolution Image</span>

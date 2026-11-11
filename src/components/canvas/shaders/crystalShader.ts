@@ -41,16 +41,13 @@ export const CrystalFresnelShader = {
     varying float vFresnel;
 
     void main() {
-      // Animated energy veins traveling upward
       float pulse = sin(vWorldPosition.y * 3.5 - uTime * 2.5) * 0.5 + 0.5;
       float microShimmer = sin(vWorldPosition.x * 12.0 + vWorldPosition.z * 12.0 + uTime * 3.0) * 0.15;
 
-      // Color gradation
       vec3 col = mix(uColorBase, uColorAccent, pulse * 0.4);
       col = mix(col, uColorRim, vFresnel * 0.95 + microShimmer);
 
-      // Emissive edge bloom boost
-      vec3 bloomGlow = uColorRim * pow(vFresnel, 1.5) * 1.8;
+      vec3 bloomGlow = uColorRim * pow(vFresnel, 1.5) * 1.5;
       vec3 finalColor = col + bloomGlow;
 
       float alpha = clamp(uOpacity * (0.6 + vFresnel * 0.4), 0.0, 1.0);
@@ -82,12 +79,12 @@ export const LightBeamShader = {
     varying vec3 vPosition;
 
     void main() {
-      // Vertical fade and cylindrical beam falloff
-      float verticalFade = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.65, vUv.y);
-      float shimmer = sin(vUv.y * 20.0 - uTime * 4.0) * 0.15 + 0.85;
-      float alpha = verticalFade * shimmer * 0.35;
+      // Gentle atmospheric vertical beam with non-intrusive transparency
+      float verticalFade = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
+      float shimmer = sin(vUv.y * 16.0 - uTime * 3.0) * 0.12 + 0.88;
+      float alpha = verticalFade * shimmer * 0.18; // Softened to avoid blinding text
 
-      gl_FragColor = vec4(uColor * 1.5, alpha);
+      gl_FragColor = vec4(uColor * 1.2, alpha);
     }
   `,
 };

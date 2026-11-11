@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DustParticleTransition from './DustParticleTransition';
-import { soundFx } from '../utils/audio';
 import { ChevronLeft, ChevronRight, ArrowUpDown, ArrowLeftRight } from 'lucide-react';
 
 export interface StageConfig {
@@ -38,8 +37,6 @@ export default function FocalStageViewport({
 
       setIsLocked(true);
       setPhase('disintegrating');
-      soundFx.playClickPulse();
-      soundFx.playHoverChime();
 
       // Reset internal scroll of the active container when transmuting
       if (contentContainerRef.current) {
@@ -202,7 +199,6 @@ export default function FocalStageViewport({
         <button
           onClick={() => prevStage && triggerTransition(displayedStage - 1)}
           disabled={!prevStage || isLocked}
-          onMouseEnter={() => prevStage && soundFx.playHoverChime()}
           className={`group flex items-center gap-2 p-3 rounded-2xl glass-panel border transition-all duration-300 ${
             prevStage
               ? 'border-amber-400/30 hover:border-amber-400 hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer'
@@ -229,7 +225,6 @@ export default function FocalStageViewport({
         <button
           onClick={() => nextStage && triggerTransition(displayedStage + 1)}
           disabled={!nextStage || isLocked}
-          onMouseEnter={() => nextStage && soundFx.playHoverChime()}
           className={`group flex items-center gap-2 p-3 rounded-2xl glass-panel border transition-all duration-300 ${
             nextStage
               ? 'border-amber-400/30 hover:border-amber-400 hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer'
@@ -271,7 +266,7 @@ export default function FocalStageViewport({
         </div>
       </div>
 
-      {/* 5. Bottom Navigation Telemetry Helper Pill */}
+      {/* 5. Bottom navigation helper pill */}
       <div className="fixed bottom-16 sm:bottom-14 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex items-center gap-4 px-4 py-1.5 rounded-full glass-panel border border-amber-400/30 text-[10px] font-mono text-gray-300 shadow-xl">
         {/* Mobile Left Arrow */}
         <button
@@ -290,7 +285,7 @@ export default function FocalStageViewport({
           <span className="opacity-40">•</span>
           <span className="flex items-center gap-1 text-gray-300">
             <ArrowUpDown className="w-3.5 h-3.5 text-[#7AC7FF]" />
-            <span>[↑ / ↓] EXPLORE SECTION</span>
+            <span>[↑ / ↓] SCROLL SECTION</span>
           </span>
         </div>
 
