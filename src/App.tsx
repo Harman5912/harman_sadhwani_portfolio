@@ -19,7 +19,8 @@ import { ProjectItem } from './data/portfolioData';
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [currentStage, setCurrentStage] = useState(0);
-  const [sceneMode, setSceneMode] = useState<'cinematic' | 'wireframe' | 'quantum'>('cinematic');
+  // Fixed to Wireframe Shader as requested
+  const [sceneMode, setSceneMode] = useState<'cinematic' | 'wireframe' | 'quantum'>('wireframe');
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [selectedCertificate, setSelectedCertificate] = useState<{
     title: string;
@@ -95,7 +96,7 @@ export default function App() {
       {/* Introductory Cinematic Loader */}
       {loading && <IntroLoader onComplete={() => setLoading(false)} />}
 
-      {/* Persistent 3D WebGL Digital Kingdom Scene with Custom Shaders & Unreal Bloom */}
+      {/* Persistent 3D WebGL Digital Kingdom Scene with Wireframe Shader & Unreal Bloom */}
       <GrandKingdomScene scrollProgress={scrollProgress} sceneMode={sceneMode} />
 
       {/* Floating Glass Navigation Header */}
